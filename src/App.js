@@ -46,7 +46,15 @@ const App = () => {
   const [page, setPage] = useState('authors')
   const authors = useQuery(ALL_AUTHORS)
   const books = useQuery(ALL_BOOKS)
-  const [addBook] = useMutation(CREATE_BOOK)
+  const handleError = (error)=> {
+    console.log(error)
+  }
+
+  const [addBook] = useMutation(CREATE_BOOK, {
+    onError: handleError,
+    refetchQueries: [{ query: ALL_BOOKS }, {query:ALL_AUTHORS}]
+  })
+
   console.log('result', authors)
   console.log('addBook', addBook)
 
