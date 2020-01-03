@@ -16,7 +16,7 @@ const NewBook = (props) => {
     e.preventDefault()
     const gnrs = [genre]
     await props.addBook({
-      variables:{title, author, published, genres:['fiction']}
+      variables:{title, author, published, genres:genres}
     })
 
     console.log('add book...')
