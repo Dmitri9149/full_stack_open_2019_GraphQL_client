@@ -5,6 +5,10 @@ import Books from './components/Books'
 import NewBook from './components/NewBook'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 
+import { Component } from 'react';
+import Select from 'react-select';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const ALL_AUTHORS = gql`
   {
@@ -51,10 +55,6 @@ const EDIT_AUTHOR = gql`
       born
     }
   }
-
-
-
-
 `
 
 const App = () => {

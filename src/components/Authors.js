@@ -2,6 +2,12 @@ import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
+import Select from 'react-select';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+
+
 
 const Authors = (props) => {
   const [name, setName] = useState('')
@@ -26,6 +32,19 @@ const Authors = (props) => {
     setName('')
     setBorn('')
   } 
+
+  const Authors = props.authors.data.allAuthors.map(a => {
+    const container = {}
+    container.label = a.name
+    container.value = a.name
+    return container
+  })
+
+  const handleChange = (selectedOption)=> {
+    console.log(selectedOption.value)
+    setName(selectedOption.value)
+  }
+
 
   return (
     <div>
@@ -54,14 +73,13 @@ const Authors = (props) => {
       </div>
       <div>
         <h2>Set birthday</h2>
-        <form onSubmit = {submit}>
-          <div>
-            name
-            <input 
-              value = {name}
-              onChange = {({target})=>setName(target.value)}
+        <div style={{width: '300px'}}>
+            <Select 
+              options={Authors}
+              onChange = {handleChange}
             />
           </div>
+        <form onSubmit = {submit}>
           <div>
             born
             <input
