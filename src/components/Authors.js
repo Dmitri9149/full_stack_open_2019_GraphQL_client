@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
 
 import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
