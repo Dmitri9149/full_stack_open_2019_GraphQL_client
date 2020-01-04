@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
-import { Component } from 'react';
 import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 
 
@@ -79,12 +80,8 @@ const Authors = (props) => {
       <div>
         <h2>Set birthday</h2>
         <form onSubmit = {submit}>
-          <div>
-            name
-            <input 
-              value = {name}
-              onChange = {({target})=>setName(target.value)}
-            />
+          <div style={{width: '300px'}}>
+            <Select options={Authors}/>
           </div>
           <div>
             born
@@ -96,15 +93,6 @@ const Authors = (props) => {
           </div>
           <button type='submit'>update author</button>
         </form>   
-      </div>
-      <div className="container">
-        <div className="row">
-          <div className="col-md-3"></div>
-          <div className="col-md-6">
-            <Select options={Authors} />
-          </div>
-          <div className="col-md-4"></div>
-        </div>
       </div>
     </div>
   
