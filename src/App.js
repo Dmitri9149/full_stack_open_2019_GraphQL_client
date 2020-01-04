@@ -86,7 +86,7 @@ const App = () => {
         <button onClick={() => setPage('add')}>add book</button>
       </div>
 
-      <Authors authors = {authors}
+      <Authors authors = {authors} editAuthor = {editAuthor}
         show={page === 'authors'}
       />
 
