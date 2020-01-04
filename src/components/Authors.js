@@ -2,6 +2,11 @@ import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
+import { Component } from 'react';
+import Select from 'react-select';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 const Authors = (props) => {
   const [name, setName] = useState('')
@@ -26,6 +31,25 @@ const Authors = (props) => {
     setName('')
     setBorn('')
   } 
+
+  const Authors = props.authors.data.allAuthors.map(a => {
+    const container = {}
+    container.label = a.name
+    container.value = a.name
+    return container
+
+
+  })
+
+  const Countries = [
+    { label: "Albania", value: 355 },
+    { label: "Argentina", value: 54 },
+    { label: "Austria", value: 43 },
+    { label: "Cocos Islands", value: 61 },
+    { label: "Kuwait", value: 965 },
+    { label: "Sweden", value: 46 },
+    { label: "Venezuela", value: 58 }
+  ];
 
   return (
     <div>
@@ -72,6 +96,15 @@ const Authors = (props) => {
           </div>
           <button type='submit'>update author</button>
         </form>   
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-3"></div>
+          <div className="col-md-6">
+            <Select options={Authors} />
+          </div>
+          <div className="col-md-4"></div>
+        </div>
       </div>
     </div>
   
