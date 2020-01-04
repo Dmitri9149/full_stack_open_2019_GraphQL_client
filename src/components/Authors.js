@@ -38,9 +38,12 @@ const Authors = (props) => {
     container.label = a.name
     container.value = a.name
     return container
-
-
   })
+
+  const handleChange = (selectedOption)=> {
+    console.log(selectedOption.value)
+    setName(selectedOption.value)
+  }
 
 
   return (
@@ -70,10 +73,13 @@ const Authors = (props) => {
       </div>
       <div>
         <h2>Set birthday</h2>
-        <form onSubmit = {submit}>
-          <div style={{width: '300px'}}>
-            <Select options={Authors}/>
+        <div style={{width: '300px'}}>
+            <Select 
+              options={Authors}
+              onChange = {handleChange}
+            />
           </div>
+        <form onSubmit = {submit}>
           <div>
             born
             <input
