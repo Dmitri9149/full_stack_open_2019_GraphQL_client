@@ -31,7 +31,7 @@ const Authors = (props) => {
     setBorn('')
   } 
 
-  const Authors = props.authors.data.allAuthors.map(a => {
+  const authors_select = props.authors.data.allAuthors.map(a => {
     const container = {}
     container.label = a.name
     container.value = a.name
@@ -73,7 +73,7 @@ const Authors = (props) => {
         <h2>Set birthday</h2>
         <div style={{width: '300px'}}>
             <Select 
-              options={Authors}
+              options={authors_select}
               onChange = {handleChange}
             />
           </div>
