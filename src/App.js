@@ -9,26 +9,26 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const ALL_AUTHORS = gql`
-  {
-    allAuthors  {
-      name
-      born
-      bookCount
-    }
+{
+  allAuthors  {
+    name
+    born
+    bookCount
+    id
   }
+}
 `
 
 const ALL_BOOKS = gql`
-  {
-    allBooks  {
-      title
-      author
-      published
-    }
+{
+  allBooks  {
+    title
+    published
   }
+}
 `
 const CREATE_BOOK = gql`
-  mutation addBook($title: String!, $author: String!, $published: Int!, $genres: [String!]!) {
+  mutation createBook($title: String!, $author: String!, $published: Int!, $genres: [String!]!) {
     addBook(
       title: $title,
       author: $author,
@@ -36,7 +36,6 @@ const CREATE_BOOK = gql`
       genres: $genres
     ) {
       title
-      author
       id
       published
       genres
