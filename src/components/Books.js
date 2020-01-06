@@ -24,11 +24,11 @@ const Books = ({show, books}) => {
               published
             </th>
           </tr>
-          {books.data.allBooks.map(a =>
-            <tr key={a.title}>
-              <td>{a.title}</td>
-              <td>{a.author}</td>
-              <td>{a.published}</td>
+          {books.data.allBooks.map(b =>
+            <tr key={b.title}>
+              <td>{b.title}</td>
+              <td>{b.author.name}</td>
+              <td>{b.published}</td>
             </tr>
           )}
         </tbody>

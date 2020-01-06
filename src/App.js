@@ -14,7 +14,6 @@ const ALL_AUTHORS = gql`
     name
     born
     bookCount
-    id
   }
 }
 `
@@ -24,6 +23,11 @@ const ALL_BOOKS = gql`
   allBooks  {
     title
     published
+    genres
+    author {
+      name
+    }
+    
   }
 }
 `
@@ -36,9 +40,11 @@ const CREATE_BOOK = gql`
       genres: $genres
     ) {
       title
-      id
       published
       genres
+      author {
+        name
+      }
       }
   }
 `
@@ -58,6 +64,7 @@ const App = () => {
   const [page, setPage] = useState('authors')
   const authors = useQuery(ALL_AUTHORS)
   const books = useQuery(ALL_BOOKS)
+
   const handleError = (error)=> {
     console.log(error)
   }
