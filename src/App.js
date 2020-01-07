@@ -144,7 +144,7 @@ const App = () => {
       <NewBook addBook = {addBook}
         show={page === 'add'}
       />
-
+      <button onClick={logout}>logout</button>
     </div>
   )
 }
