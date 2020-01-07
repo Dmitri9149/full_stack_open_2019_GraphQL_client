@@ -76,6 +76,14 @@ const App = () => {
 
   const [errorMessage, setErrorMessage] = useState(null)
   const [token, setToken] = useState(null)
+
+  const handleError = (error) => {
+    setErrorMessage(error.graphQLErrors[0].message)
+    setTimeout(() => {
+      setErrorMessage(null)
+    }, 10000)
+  }
+
   const [login] = useMutation(LOGIN, {
     onError: handleError
   })
@@ -90,12 +98,6 @@ const App = () => {
       {errorMessage}
     </div>
 
-  const handleError = (error) => {
-    setErrorMessage(error.graphQLErrors[0].message)
-    setTimeout(() => {
-      setErrorMessage(null)
-    }, 10000)
-  }
 
   const [addBook] = useMutation(CREATE_BOOK, {
     onError: handleError,
