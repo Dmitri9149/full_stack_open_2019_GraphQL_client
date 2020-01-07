@@ -14,7 +14,7 @@ const LoginForm = (props) => {
     if (result) {
       const token = result.data.login.value
       props.setToken(token)
-      localStorage.setItem('phonenumbers-user-token', token)
+      localStorage.setItem('user-token', token)
     }
   }
 
