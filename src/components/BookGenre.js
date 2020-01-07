@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const Books = ({show, books}) => {
+import Select from 'react-select';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+const BookGenre = ({show, books}) => {
+
+  const [genre, setGenre] = useState('')
+
   if (!show) {
     return null
   }
@@ -9,9 +15,27 @@ const Books = ({show, books}) => {
     return <div>loading...</div>
   }
 
+  console.log(books.data.allBooks)
+  const all_genres = books.data.allBooks.reduce(
+    (accumulator, current_book, index) => (accumulator.concat(current_book.genres), [])
+  )
+   
+
+
+  const handleChange = (selectedOption)=> {
+    console.log(selectedOption.value)
+    setGenre(selectedOption.value)
+  }
+
   return (
     <div>
-      <h2>books</h2>
+      <h2>Select the genre</h2>
+      <div style={{width: '300px'}}>
+            <Select 
+              options={all_genres}
+              onChange = {handleChange}
+            />
+      </div>
 
       <table>
         <tbody>
@@ -37,4 +61,4 @@ const Books = ({show, books}) => {
   )
 }
 
-export default Books
+export default BookGenre

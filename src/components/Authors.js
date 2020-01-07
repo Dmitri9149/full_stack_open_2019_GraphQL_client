@@ -76,7 +76,7 @@ const Authors = (props) => {
               options={authors_select}
               onChange = {handleChange}
             />
-          </div>
+        </div>
         <form onSubmit = {submit}>
           <div>
             born
