@@ -4,7 +4,7 @@ import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -74,6 +74,7 @@ const App = () => {
   const authors = useQuery(ALL_AUTHORS)
   const books = useQuery(ALL_BOOKS)
 
+  const [errorMessage, setErrorMessage] = useState(null)
   const [token, setToken] = useState(null)
   const [login] = useMutation(LOGIN, {
     onError: handleError
@@ -89,8 +90,11 @@ const App = () => {
       {errorMessage}
     </div>
 
-  const handleError = (error)=> {
-    console.log(error)
+  const handleError = (error) => {
+    setErrorMessage(error.graphQLErrors[0].message)
+    setTimeout(() => {
+      setErrorMessage(null)
+    }, 10000)
   }
 
   const [addBook] = useMutation(CREATE_BOOK, {
