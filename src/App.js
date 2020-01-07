@@ -73,6 +73,16 @@ const App = () => {
   const authors = useQuery(ALL_AUTHORS)
   const books = useQuery(ALL_BOOKS)
 
+  const [token, setToken] = useState(null)
+  const [login] = useMutation(LOGIN, {
+    onError: handleError
+  })
+
+  const errorNotification = () => errorMessage &&
+    <div style={{ color: 'red' }}>
+      {errorMessage}
+    </div>
+
   const handleError = (error)=> {
     console.log(error)
   }
