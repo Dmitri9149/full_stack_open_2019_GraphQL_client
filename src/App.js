@@ -60,6 +60,13 @@ const EDIT_AUTHOR = gql`
     }
   }
 `
+const LOGIN = gql`
+  mutation login($username: String!, $password: String!) {
+    login(username: $username, password: $password)  {
+      value
+    }
+  }
+`
 
 const App = () => {
   const [page, setPage] = useState('authors')
