@@ -69,6 +69,7 @@ const LOGIN = gql`
 `
 
 const App = () => {
+  const client = useApolloClient()
   const [page, setPage] = useState('authors')
   const authors = useQuery(ALL_AUTHORS)
   const books = useQuery(ALL_BOOKS)
@@ -77,6 +78,11 @@ const App = () => {
   const [login] = useMutation(LOGIN, {
     onError: handleError
   })
+  const logout = () => {
+    setToken(null)
+    localStorage.clear()
+    client.resetStore()
+  }
 
   const errorNotification = () => errorMessage &&
     <div style={{ color: 'red' }}>
@@ -99,6 +105,19 @@ const App = () => {
 
   console.log('result', authors)
   console.log('addBook', addBook)
+
+  if (!token) {
+    return (
+      <div>
+        {errorNotification()}
+        <h2>Login</h2>
+        <LoginForm
+          login={login}
+          setToken={(token) => setToken(token)}
+        />
+      </div>
+    )
+  }
 
   return (
     <div>
