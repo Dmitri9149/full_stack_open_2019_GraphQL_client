@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { gql } from 'apollo-boost'
 import Authors from './components/Authors'
-import BookGenre from './components/BookGenre'
+import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks'
@@ -129,7 +129,7 @@ const App = () => {
     <div>
       <div>
         <button onClick={() => setPage('authors')}>authors</button>
-        <button onClick={() => setPage('books_genres')}>books_genres</button>
+        <button onClick={() => setPage('books')}>books</button>
         <button onClick={() => setPage('add')}>add book</button>
         <button onClick={logout}>logout</button>
       </div>
@@ -141,8 +141,8 @@ const App = () => {
         show={page === 'authors'}
       />
 
-      <BookGenre books = {books}
-        show={page === 'books_genres'}
+      <Books books = {books}
+        show={page === 'books'}
       />
 
       <NewBook addBook = {addBook}
