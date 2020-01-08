@@ -5,7 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const BookGenre = ({show, books}) => {
 
-  const [genre, setGenre] = useState('')
+  const [filtered_books, setFiltered_books] = useState([])
+  console.log('filtered_books', filtered_books)
 
   if (!show) {
     return null
@@ -15,16 +16,32 @@ const BookGenre = ({show, books}) => {
     return <div>loading...</div>
   }
 
-  console.log(books.data.allBooks)
-  const all_genres = books.data.allBooks.reduce(
-    (accumulator, current_book, index) => (accumulator.concat(current_book.genres), [])
+  const genres =() => {
+  const all_genres_list = books.data.allBooks.reduce(
+    (accumulator, current_book, index) => accumulator.concat(current_book.genres), []
   )
+  console.log(all_genres_list)
+  const all_genres_0 = all_genres_list.map(b=> {
+    const container = {}
+    container.label = b
+    container.value = b
+    return container
+  })
+  const all_genres = [...all_genres_0, {label:'allgenres', value:'allgenres'}]
+  return all_genres
+}
+
+  const filter_books = (genre) => {
+    if (genre === 'allgenres') {
+      return books.data.allBooks
+    }
+      return books.data.allBooks.filter(b => b.genres.some(v=> v === genre) ?b :null)
+  }
    
-
-
   const handleChange = (selectedOption)=> {
     console.log(selectedOption.value)
-    setGenre(selectedOption.value)
+    console.log('filter_books!!!', filter_books(selectedOption.value))
+    setFiltered_books(filter_books(selectedOption.value))
   }
 
   return (
@@ -32,7 +49,7 @@ const BookGenre = ({show, books}) => {
       <h2>Select the genre</h2>
       <div style={{width: '300px'}}>
             <Select 
-              options={all_genres}
+              options = {genres()}
               onChange = {handleChange}
             />
       </div>
@@ -48,7 +65,7 @@ const BookGenre = ({show, books}) => {
               published
             </th>
           </tr>
-          {books.data.allBooks.map(b =>
+          {filtered_books.map(b =>
             <tr key={b.title}>
               <td>{b.title}</td>
               <td>{b.author.name}</td>
