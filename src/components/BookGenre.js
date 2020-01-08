@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import Select from 'react-select';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const BookGenre = ({show, books}) => {
 
