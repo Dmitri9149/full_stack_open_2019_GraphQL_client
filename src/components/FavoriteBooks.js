@@ -1,12 +1,7 @@
 import React from 'react'
 
-import { gql } from 'apollo-boost'
-import { useQuery} from '@apollo/react-hooks'
-
-
 const FavoriteBooks = ({show, result, user}) => {
 
-const user = useQuery(SET_USER)
 
   if (!show) {
     return null
