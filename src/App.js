@@ -4,6 +4,7 @@ import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
+import FavoriteBooks from './components/FavoriteBooks'
 import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -160,6 +161,7 @@ const App = () => {
         <button onClick={() => setPage('authors')}>authors</button>
         <button onClick={() => setPage('books')}>books</button>
         <button onClick={() => setPage('add')}>add book</button>   
+        <button onClick={() => setPage('recommended')}>recommended</button>  
         <button onClick={logout}>logout</button>
       </div>
       <div>
@@ -176,6 +178,11 @@ const App = () => {
 
       <NewBook addBook = {addBook}
         show={page === 'add'}
+      />
+
+      <FavoriteBooks result  = {books}
+        user = {user}
+        show={page === 'recommended'}
       />
     </div>
   )
