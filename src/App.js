@@ -67,15 +67,28 @@ const LOGIN = gql`
     }
   }
 `
+const ME = gql`
+{
+  me {
+    username,
+    favoriteGenre
+  }
+}
+`
 
 const App = () => {
-  const client = useApolloClient()
-  const [page, setPage] = useState('authors')
-  const authors = useQuery(ALL_AUTHORS)
-  const books = useQuery(ALL_BOOKS)
 
+  const [page, setPage] = useState('authors')
   const [errorMessage, setErrorMessage] = useState(null)
   const [token, setToken] = useState(null)
+
+  const authors = useQuery(ALL_AUTHORS)
+  const books = useQuery(ALL_BOOKS, {pollInterval: 500})
+  const user = useQuery(ME, {pollInterval: 500})
+
+
+  const client = useApolloClient()
+
 
   const handleError = (error) => {
     setErrorMessage(error.graphQLErrors[0].message)
@@ -87,6 +100,7 @@ const App = () => {
   const [login] = useMutation(LOGIN, {
     onError: handleError
   })
+
   const logout = () => {
     setToken(null)
     localStorage.clear()
@@ -109,8 +123,18 @@ const App = () => {
     refetchQueries: [{ query: ALL_BOOKS }, {query:ALL_AUTHORS}]
   })  
 
+ 
   console.log('result', authors)
   console.log('addBook', addBook)
+
+  const whoIsUser = ()=> {
+    if (!(user.data.me===null)) {
+      return user.data.me.username
+    }
+    return 'no user'
+  } 
+
+
 
   if (!token) {
     return (
@@ -125,12 +149,17 @@ const App = () => {
     )
   }
 
+
   return (
     <div>
       <div>
+        {whoIsUser()}
+      </div>
+  
+      <div>
         <button onClick={() => setPage('authors')}>authors</button>
         <button onClick={() => setPage('books')}>books</button>
-        <button onClick={() => setPage('add')}>add book</button>
+        <button onClick={() => setPage('add')}>add book</button>   
         <button onClick={logout}>logout</button>
       </div>
       <div>
