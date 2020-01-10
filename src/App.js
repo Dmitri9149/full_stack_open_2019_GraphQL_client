@@ -5,7 +5,7 @@ import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import FavoriteBooks from './components/FavoriteBooks'
-import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks'
+import { useQuery, useMutation, useSubscription, useApolloClient } from '@apollo/react-hooks'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -77,6 +77,24 @@ const ME = gql`
 }
 `
 
+const BOOK_DETAILS = gql`
+fragment BookDetails on Book {
+  title
+  published
+  genres
+  author {
+    name
+  }
+}`
+
+const BOOK_ADDED = gql`
+subscription {    
+  bookAdded {...BookDetails }  
+  }  
+  ${BOOK_DETAILS}
+`
+
+
 const App = () => {
 
   const [page, setPage] = useState('authors')
@@ -111,11 +129,37 @@ const App = () => {
   const errorNotification = () => errorMessage &&
     <div style={{ color: 'red' }}>
       {errorMessage}
-    </div>
+    </div> 
+
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const newBook = subscriptionData.data.bookAdded
+      window.alert(`Subscription!!!`)
+      window.alert(`${newBook.title} added` )
+      console.log("SSSSSUUUUUBBBBSSSCCCRRIIIPPTTT")
+    }
+  })
+
+  const updateCacheWith = (addedBook) => {
+    const includedIn = (set, object) => 
+      set.map(p => p.id).includes(object.id)  
+
+    const dataInStore = client.readQuery({ query: ALL_BOOKS })
+    if (!includedIn(dataInStore.allBooks, addedBook)) {
+      dataInStore.allBooks.push(addedBook)
+      client.writeQuery({
+        query: ALL_BOOKS,
+        data: dataInStore
+      })
+    }   
+  }
 
 
   const [addBook] = useMutation(CREATE_BOOK, {
     onError: handleError,
+    update: (store, response) => {
+      console.log('UPDATE CACHE!!!!!!!')
+      updateCacheWith(response.data.addPerson)},
     refetchQueries: [{ query: ALL_BOOKS }, {query:ALL_AUTHORS}]
   })
 
