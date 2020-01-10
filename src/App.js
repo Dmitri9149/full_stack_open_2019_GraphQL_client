@@ -140,9 +140,26 @@ const App = () => {
     }
   })
 
+  const updateCacheWith = (addedBook) => {
+    const includedIn = (set, object) => 
+      set.map(p => p.id).includes(object.id)  
+
+    const dataInStore = client.readQuery({ query: ALL_BOOKS })
+    if (!includedIn(dataInStore.allBooks, addedBook)) {
+      dataInStore.allBooks.push(addedBook)
+      client.writeQuery({
+        query: ALL_BOOKS,
+        data: dataInStore
+      })
+    }   
+  }
+
 
   const [addBook] = useMutation(CREATE_BOOK, {
     onError: handleError,
+    update: (store, response) => {
+      console.log('UPDATE CACHE!!!!!!!')
+      updateCacheWith(response.data.addPerson)},
     refetchQueries: [{ query: ALL_BOOKS }, {query:ALL_AUTHORS}]
   })
 
