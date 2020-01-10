@@ -5,7 +5,7 @@ import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import FavoriteBooks from './components/FavoriteBooks'
-import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks'
+import { useQuery, useMutation, useSubscription, useApolloClient } from '@apollo/react-hooks'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -112,6 +112,12 @@ const App = () => {
     <div style={{ color: 'red' }}>
       {errorMessage}
     </div>
+
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      console.log(subscriptionData)
+    }
+  })
 
 
   const [addBook] = useMutation(CREATE_BOOK, {
