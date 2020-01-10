@@ -77,6 +77,24 @@ const ME = gql`
 }
 `
 
+const BOOK_DETAILS = gql`
+fragment BookDetails on Book {
+  title
+  published
+  genres
+  author {
+    name
+  }
+}`
+
+const BOOK_ADDED = gql`
+subscription {    
+  bookAdded {...BookDetails }  
+  }  
+  ${BOOK_DETAILS}
+`
+
+
 const App = () => {
 
   const [page, setPage] = useState('authors')
@@ -111,11 +129,14 @@ const App = () => {
   const errorNotification = () => errorMessage &&
     <div style={{ color: 'red' }}>
       {errorMessage}
-    </div>
+    </div> 
 
   useSubscription(BOOK_ADDED, {
     onSubscriptionData: ({ subscriptionData }) => {
-      console.log(subscriptionData)
+      const newBook = subscriptionData.data.bookAdded
+      window.alert(`Subscription!!!`)
+      window.alert(`${newBook.title} added` )
+      console.log("SSSSSUUUUUBBBBSSSCCCRRIIIPPTTT")
     }
   })
 
